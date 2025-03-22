@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="592274d2923d42c0ae6715e3f6b1378d" Name="Diagram1">
+        <EntityTypeShape EntityType="ClinicaDental_DBModel.Cita" Width="1.5" PointX="8.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClinicaDental_DBModel.Dentista" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClinicaDental_DBModel.Disponibilidad" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClinicaDental_DBModel.Especialidad" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClinicaDental_DBModel.Factura" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClinicaDental_DBModel.Historia" Width="1.5" PointX="10.5" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClinicaDental_DBModel.HorarioDentista" Width="1.5" PointX="5.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClinicaDental_DBModel.Paciente" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClinicaDental_DBModel.Pago" Width="1.5" PointX="5.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClinicaDental_DBModel.Tratamiento" Width="1.5" PointX="8.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClinicaDental_DBModel.Usuario" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Cita__idDentista__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Cita__idPaciente__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Historia__idCita__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Dentista__especi__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Dentista__idUsua__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Disponibi__idDen__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Historia__idDent__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__HorarioDe__idDen__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Factura__idPacie__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Historia__idPaci__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Historia__idTrat__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Paciente__idUsua__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="ClinicaDental_DBModel.FK__Pago__idPaciente__534D60F1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

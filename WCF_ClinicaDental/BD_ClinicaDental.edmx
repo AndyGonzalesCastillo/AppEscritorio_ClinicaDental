@@ -1,0 +1,1765 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ClinicaDental_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cita">
+          <Key>
+            <PropertyRef Name="idCita" />
+          </Key>
+          <Property Name="idCita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idPaciente" Type="int" />
+          <Property Name="idDentista" Type="int" />
+          <Property Name="fechaCita" Type="date" />
+          <Property Name="horaCita" Type="time" Precision="7" />
+          <Property Name="motivoCita" Type="varchar" MaxLength="250" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="Dentista">
+          <Key>
+            <PropertyRef Name="idDentista" />
+          </Key>
+          <Property Name="idDentista" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" />
+          <Property Name="especialidad" Type="int" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="Disponibilidad">
+          <Key>
+            <PropertyRef Name="idDisponibilidad" />
+          </Key>
+          <Property Name="idDisponibilidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idDentista" Type="int" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="hora" Type="time" Precision="7" />
+          <Property Name="estado" Type="int" />
+          <Property Name="MotivoEliminacion" Type="nvarchar" MaxLength="255" />
+          <Property Name="Eliminado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Especialidad">
+          <Key>
+            <PropertyRef Name="idEspecialidad" />
+          </Key>
+          <Property Name="idEspecialidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="descripcion" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="idFactura" />
+          </Key>
+          <Property Name="idFactura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idPaciente" Type="int" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="montoTotal" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="Historia">
+          <Key>
+            <PropertyRef Name="idHistoria" />
+          </Key>
+          <Property Name="idHistoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idPaciente" Type="int" />
+          <Property Name="idCita" Type="int" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="descripcion" Type="text" />
+          <Property Name="idDentista" Type="int" />
+          <Property Name="idTratamiento" Type="int" />
+          <Property Name="observaciones" Type="text" />
+        </EntityType>
+        <EntityType Name="HorarioDentista">
+          <Key>
+            <PropertyRef Name="idHorario" />
+          </Key>
+          <Property Name="idHorario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idDentista" Type="int" />
+          <Property Name="diaSemana" Type="varchar" MaxLength="20" />
+          <Property Name="horaInicio" Type="time" Precision="7" />
+          <Property Name="horaFin" Type="time" Precision="7" />
+          <Property Name="mesObjetivo" Type="int" />
+          <Property Name="anioObjetivo" Type="int" />
+        </EntityType>
+        <EntityType Name="Paciente">
+          <Key>
+            <PropertyRef Name="idPaciente" />
+          </Key>
+          <Property Name="idPaciente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" />
+        </EntityType>
+        <EntityType Name="Pago">
+          <Key>
+            <PropertyRef Name="idPago" />
+          </Key>
+          <Property Name="idPago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idPaciente" Type="int" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="monto" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="metodoPago" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tratamiento">
+          <Key>
+            <PropertyRef Name="idTratamiento" />
+          </Key>
+          <Property Name="idTratamiento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="descripcion" Type="varchar" MaxLength="250" />
+          <Property Name="precio" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dni" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="100" />
+          <Property Name="contraseña" Type="varchar" MaxLength="100" />
+          <Property Name="nombres" Type="varchar" MaxLength="100" />
+          <Property Name="apellidos" Type="varchar" MaxLength="100" />
+          <Property Name="telefono" Type="varchar" MaxLength="15" />
+          <Property Name="fechaNacimiento" Type="date" />
+          <Property Name="direccion" Type="varchar" MaxLength="200" />
+          <Property Name="sexo" Type="int" />
+          <Property Name="rol" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <Association Name="FK__Cita__idDentista__4BAC3F29">
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="0..1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dentista">
+              <PropertyRef Name="idDentista" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="idDentista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cita__idPaciente__4AB81AF0">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Dentista__especi__44FF419A">
+          <End Role="Especialidad" Type="Self.Especialidad" Multiplicity="0..1" />
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidad">
+              <PropertyRef Name="idEspecialidad" />
+            </Principal>
+            <Dependent Role="Dentista">
+              <PropertyRef Name="especialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Dentista__idUsua__440B1D61">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Dentista">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Disponibi__idDen__5EBF139D">
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Disponibilidad" Type="Self.Disponibilidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dentista">
+              <PropertyRef Name="idDentista" />
+            </Principal>
+            <Dependent Role="Disponibilidad">
+              <PropertyRef Name="idDentista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Factura__idPacie__4F7CD00D">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historia__idCita__571DF1D5">
+          <End Role="Cita" Type="Self.Cita" Multiplicity="0..1" />
+          <End Role="Historia" Type="Self.Historia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cita">
+              <PropertyRef Name="idCita" />
+            </Principal>
+            <Dependent Role="Historia">
+              <PropertyRef Name="idCita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historia__idDent__5812160E">
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="0..1" />
+          <End Role="Historia" Type="Self.Historia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dentista">
+              <PropertyRef Name="idDentista" />
+            </Principal>
+            <Dependent Role="Historia">
+              <PropertyRef Name="idDentista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historia__idPaci__5629CD9C">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Historia" Type="Self.Historia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="Historia">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historia__idTrat__59063A47">
+          <End Role="Tratamiento" Type="Self.Tratamiento" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Historia" Type="Self.Historia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tratamiento">
+              <PropertyRef Name="idTratamiento" />
+            </Principal>
+            <Dependent Role="Historia">
+              <PropertyRef Name="idTratamiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HorarioDe__idDen__5BE2A6F2">
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="HorarioDentista" Type="Self.HorarioDentista" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dentista">
+              <PropertyRef Name="idDentista" />
+            </Principal>
+            <Dependent Role="HorarioDentista">
+              <PropertyRef Name="idDentista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paciente__idUsua__3F466844">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Paciente">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pago__idPaciente__534D60F1">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="Pago">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_ActualizarDentista" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="dni" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="contraseña" Type="varchar" Mode="In" />
+          <Parameter Name="nombres" Type="varchar" Mode="In" />
+          <Parameter Name="apellidos" Type="varchar" Mode="In" />
+          <Parameter Name="telefono" Type="varchar" Mode="In" />
+          <Parameter Name="fechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="direccion" Type="varchar" Mode="In" />
+          <Parameter Name="sexo" Type="int" Mode="In" />
+          <Parameter Name="estado" Type="int" Mode="In" />
+          <Parameter Name="especialidad" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ActualizarEstadoCita" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCita" Type="int" Mode="In" />
+          <Parameter Name="nuevoEstado" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ActualizarHistoriaClinica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idHistoria" Type="int" Mode="In" />
+          <Parameter Name="descripcion" Type="text" Mode="In" />
+          <Parameter Name="observaciones" Type="text" Mode="In" />
+          <Parameter Name="idTratamiento" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ActualizarPaciente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPaciente" Type="int" Mode="In" />
+          <Parameter Name="dni" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="contraseña" Type="varchar" Mode="In" />
+          <Parameter Name="nombres" Type="varchar" Mode="In" />
+          <Parameter Name="apellidos" Type="varchar" Mode="In" />
+          <Parameter Name="telefono" Type="varchar" Mode="In" />
+          <Parameter Name="fechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="direccion" Type="varchar" Mode="In" />
+          <Parameter Name="sexo" Type="int" Mode="In" />
+          <Parameter Name="estado" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_AgregarAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dni" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="contraseña" Type="varchar" Mode="In" />
+          <Parameter Name="nombres" Type="varchar" Mode="In" />
+          <Parameter Name="apellidos" Type="varchar" Mode="In" />
+          <Parameter Name="telefono" Type="varchar" Mode="In" />
+          <Parameter Name="fechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="direccion" Type="varchar" Mode="In" />
+          <Parameter Name="sexo" Type="int" Mode="In" />
+          <Parameter Name="estado" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_AgregarCita" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPaciente" Type="int" Mode="In" />
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="fechaCita" Type="date" Mode="In" />
+          <Parameter Name="horaCita" Type="time" Mode="In" />
+          <Parameter Name="motivoCita" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_AgregarDentista" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dni" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="contraseña" Type="varchar" Mode="In" />
+          <Parameter Name="nombres" Type="varchar" Mode="In" />
+          <Parameter Name="apellidos" Type="varchar" Mode="In" />
+          <Parameter Name="telefono" Type="varchar" Mode="In" />
+          <Parameter Name="fechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="direccion" Type="varchar" Mode="In" />
+          <Parameter Name="sexo" Type="int" Mode="In" />
+          <Parameter Name="especialidad" Type="int" Mode="In" />
+          <Parameter Name="estado" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_AgregarEspecialidad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_AgregarHistoriaClinica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPaciente" Type="int" Mode="In" />
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="idTratamiento" Type="int" Mode="In" />
+          <Parameter Name="idCita" Type="int" Mode="In" />
+          <Parameter Name="descripcion" Type="text" Mode="In" />
+          <Parameter Name="observaciones" Type="text" Mode="In" />
+        </Function>
+        <Function Name="sp_AgregarHorarioDentista" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="diaSemana" Type="varchar" Mode="In" />
+          <Parameter Name="horaInicio" Type="time" Mode="In" />
+          <Parameter Name="horaFin" Type="time" Mode="In" />
+          <Parameter Name="mesObjetivo" Type="int" Mode="In" />
+          <Parameter Name="anioObjetivo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_AgregarPaciente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dni" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="contraseña" Type="varchar" Mode="In" />
+          <Parameter Name="nombres" Type="varchar" Mode="In" />
+          <Parameter Name="apellidos" Type="varchar" Mode="In" />
+          <Parameter Name="telefono" Type="varchar" Mode="In" />
+          <Parameter Name="fechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="direccion" Type="varchar" Mode="In" />
+          <Parameter Name="sexo" Type="int" Mode="In" />
+          <Parameter Name="estado" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_AgregarRecepcionista" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dni" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="contraseña" Type="varchar" Mode="In" />
+          <Parameter Name="nombres" Type="varchar" Mode="In" />
+          <Parameter Name="apellidos" Type="varchar" Mode="In" />
+          <Parameter Name="telefono" Type="varchar" Mode="In" />
+          <Parameter Name="fechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="direccion" Type="varchar" Mode="In" />
+          <Parameter Name="sexo" Type="int" Mode="In" />
+          <Parameter Name="estado" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_AgregarTratamiento" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="precio" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="sp_CancelarCita" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCita" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ConsultarCitas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPaciente" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ConsultarDentista" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ConsultarDisponibilidad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="fecha" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sp_ConsultarDisponibilidadDetallada" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ConsultarHistoriaClinica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPaciente" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ConsultarHistoriaClinicaPorCita" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCita" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ConsultarPaciente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPaciente" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_EliminarDentista" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_EliminarDisponibilidadDentista" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="Fecha" Type="date" Mode="In" />
+          <Parameter Name="Hora" Type="time" Mode="In" />
+          <Parameter Name="Motivo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_EliminarDisponibilidadDia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="Fecha" Type="date" Mode="In" />
+          <Parameter Name="Motivo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_EliminarHorarioDentistaDia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="Fecha" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sp_EliminarHorarioDentistaHora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="Fecha" Type="date" Mode="In" />
+          <Parameter Name="Hora" Type="time" Mode="In" />
+        </Function>
+        <Function Name="sp_EliminarPaciente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPaciente" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ListarCitasPorDentistaYFecha" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="fechaInicio" Type="datetime" Mode="In" />
+          <Parameter Name="fechaFin" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_ListarDentistas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ListarDentistasPorEspecialidadDetallado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idEspecialidad" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ListarEspecialidades" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ListarPacientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ListarTratamientos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_LoginPaciente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dni" Type="varchar" Mode="In" />
+          <Parameter Name="contraseña" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ObtenerCalendarioDisponible" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sp_ObtenerCalendarioSemanal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ObtenerHorarioDentista" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sp_ObtenerHorarioDetallado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idDentista" Type="int" Mode="In" />
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sp_RegistrarPago" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPaciente" Type="int" Mode="In" />
+          <Parameter Name="monto" Type="decimal" Mode="In" />
+          <Parameter Name="metodoPago" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="ClinicaDental_DBModelStoreContainer">
+          <EntitySet Name="Cita" EntityType="Self.Cita" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dentista" EntityType="Self.Dentista" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Disponibilidad" EntityType="Self.Disponibilidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Especialidad" EntityType="Self.Especialidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Historia" EntityType="Self.Historia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HorarioDentista" EntityType="Self.HorarioDentista" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paciente" EntityType="Self.Paciente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pago" EntityType="Self.Pago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tratamiento" EntityType="Self.Tratamiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cita__idDentista__4BAC3F29" Association="Self.FK__Cita__idDentista__4BAC3F29">
+            <End Role="Dentista" EntitySet="Dentista" />
+            <End Role="Cita" EntitySet="Cita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cita__idPaciente__4AB81AF0" Association="Self.FK__Cita__idPaciente__4AB81AF0">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="Cita" EntitySet="Cita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Dentista__especi__44FF419A" Association="Self.FK__Dentista__especi__44FF419A">
+            <End Role="Especialidad" EntitySet="Especialidad" />
+            <End Role="Dentista" EntitySet="Dentista" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Dentista__idUsua__440B1D61" Association="Self.FK__Dentista__idUsua__440B1D61">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Dentista" EntitySet="Dentista" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Disponibi__idDen__5EBF139D" Association="Self.FK__Disponibi__idDen__5EBF139D">
+            <End Role="Dentista" EntitySet="Dentista" />
+            <End Role="Disponibilidad" EntitySet="Disponibilidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Factura__idPacie__4F7CD00D" Association="Self.FK__Factura__idPacie__4F7CD00D">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historia__idCita__571DF1D5" Association="Self.FK__Historia__idCita__571DF1D5">
+            <End Role="Cita" EntitySet="Cita" />
+            <End Role="Historia" EntitySet="Historia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historia__idDent__5812160E" Association="Self.FK__Historia__idDent__5812160E">
+            <End Role="Dentista" EntitySet="Dentista" />
+            <End Role="Historia" EntitySet="Historia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historia__idPaci__5629CD9C" Association="Self.FK__Historia__idPaci__5629CD9C">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="Historia" EntitySet="Historia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historia__idTrat__59063A47" Association="Self.FK__Historia__idTrat__59063A47">
+            <End Role="Tratamiento" EntitySet="Tratamiento" />
+            <End Role="Historia" EntitySet="Historia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HorarioDe__idDen__5BE2A6F2" Association="Self.FK__HorarioDe__idDen__5BE2A6F2">
+            <End Role="Dentista" EntitySet="Dentista" />
+            <End Role="HorarioDentista" EntitySet="HorarioDentista" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paciente__idUsua__3F466844" Association="Self.FK__Paciente__idUsua__3F466844">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Paciente" EntitySet="Paciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pago__idPaciente__534D60F1" Association="Self.FK__Pago__idPaciente__534D60F1">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="Pago" EntitySet="Pago" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClinicaDental_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cita">
+          <Key>
+            <PropertyRef Name="idCita" />
+          </Key>
+          <Property Name="idCita" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idPaciente" Type="Int32" />
+          <Property Name="idDentista" Type="Int32" />
+          <Property Name="fechaCita" Type="DateTime" Precision="0" />
+          <Property Name="horaCita" Type="Time" Precision="7" />
+          <Property Name="motivoCita" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="Dentista" Relationship="Self.FK__Cita__idDentista__4BAC3F29" FromRole="Cita" ToRole="Dentista" />
+          <NavigationProperty Name="Paciente" Relationship="Self.FK__Cita__idPaciente__4AB81AF0" FromRole="Cita" ToRole="Paciente" />
+          <NavigationProperty Name="Historia" Relationship="Self.FK__Historia__idCita__571DF1D5" FromRole="Cita" ToRole="Historia" />
+        </EntityType>
+        <EntityType Name="Dentista">
+          <Key>
+            <PropertyRef Name="idDentista" />
+          </Key>
+          <Property Name="idDentista" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" />
+          <Property Name="especialidad" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__idDentista__4BAC3F29" FromRole="Dentista" ToRole="Cita" />
+          <NavigationProperty Name="Especialidad1" Relationship="Self.FK__Dentista__especi__44FF419A" FromRole="Dentista" ToRole="Especialidad" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Dentista__idUsua__440B1D61" FromRole="Dentista" ToRole="Usuario" />
+          <NavigationProperty Name="Disponibilidad" Relationship="Self.FK__Disponibi__idDen__5EBF139D" FromRole="Dentista" ToRole="Disponibilidad" />
+          <NavigationProperty Name="Historia" Relationship="Self.FK__Historia__idDent__5812160E" FromRole="Dentista" ToRole="Historia" />
+          <NavigationProperty Name="HorarioDentista" Relationship="Self.FK__HorarioDe__idDen__5BE2A6F2" FromRole="Dentista" ToRole="HorarioDentista" />
+        </EntityType>
+        <EntityType Name="Disponibilidad">
+          <Key>
+            <PropertyRef Name="idDisponibilidad" />
+          </Key>
+          <Property Name="idDisponibilidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idDentista" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="hora" Type="Time" Precision="7" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="MotivoEliminacion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Eliminado" Type="Boolean" />
+          <NavigationProperty Name="Dentista" Relationship="Self.FK__Disponibi__idDen__5EBF139D" FromRole="Disponibilidad" ToRole="Dentista" />
+        </EntityType>
+        <EntityType Name="Especialidad">
+          <Key>
+            <PropertyRef Name="idEspecialidad" />
+          </Key>
+          <Property Name="idEspecialidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Dentista" Relationship="Self.FK__Dentista__especi__44FF419A" FromRole="Especialidad" ToRole="Dentista" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="idFactura" />
+          </Key>
+          <Property Name="idFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idPaciente" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="montoTotal" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="Paciente" Relationship="Self.FK__Factura__idPacie__4F7CD00D" FromRole="Factura" ToRole="Paciente" />
+        </EntityType>
+        <EntityType Name="Historia">
+          <Key>
+            <PropertyRef Name="idHistoria" />
+          </Key>
+          <Property Name="idHistoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idPaciente" Type="Int32" />
+          <Property Name="idCita" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="idDentista" Type="Int32" />
+          <Property Name="idTratamiento" Type="Int32" />
+          <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cita" Relationship="Self.FK__Historia__idCita__571DF1D5" FromRole="Historia" ToRole="Cita" />
+          <NavigationProperty Name="Dentista" Relationship="Self.FK__Historia__idDent__5812160E" FromRole="Historia" ToRole="Dentista" />
+          <NavigationProperty Name="Paciente" Relationship="Self.FK__Historia__idPaci__5629CD9C" FromRole="Historia" ToRole="Paciente" />
+          <NavigationProperty Name="Tratamiento" Relationship="Self.FK__Historia__idTrat__59063A47" FromRole="Historia" ToRole="Tratamiento" />
+        </EntityType>
+        <EntityType Name="HorarioDentista">
+          <Key>
+            <PropertyRef Name="idHorario" />
+          </Key>
+          <Property Name="idHorario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idDentista" Type="Int32" />
+          <Property Name="diaSemana" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="horaInicio" Type="Time" Precision="7" />
+          <Property Name="horaFin" Type="Time" Precision="7" />
+          <Property Name="mesObjetivo" Type="Int32" />
+          <Property Name="anioObjetivo" Type="Int32" />
+          <NavigationProperty Name="Dentista" Relationship="Self.FK__HorarioDe__idDen__5BE2A6F2" FromRole="HorarioDentista" ToRole="Dentista" />
+        </EntityType>
+        <EntityType Name="Paciente">
+          <Key>
+            <PropertyRef Name="idPaciente" />
+          </Key>
+          <Property Name="idPaciente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" />
+          <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__idPaciente__4AB81AF0" FromRole="Paciente" ToRole="Cita" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK__Factura__idPacie__4F7CD00D" FromRole="Paciente" ToRole="Factura" />
+          <NavigationProperty Name="Historia" Relationship="Self.FK__Historia__idPaci__5629CD9C" FromRole="Paciente" ToRole="Historia" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Paciente__idUsua__3F466844" FromRole="Paciente" ToRole="Usuario" />
+          <NavigationProperty Name="Pago" Relationship="Self.FK__Pago__idPaciente__534D60F1" FromRole="Paciente" ToRole="Pago" />
+        </EntityType>
+        <EntityType Name="Pago">
+          <Key>
+            <PropertyRef Name="idPago" />
+          </Key>
+          <Property Name="idPago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idPaciente" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="monto" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="metodoPago" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Paciente" Relationship="Self.FK__Pago__idPaciente__534D60F1" FromRole="Pago" ToRole="Paciente" />
+        </EntityType>
+        <EntityType Name="Tratamiento">
+          <Key>
+            <PropertyRef Name="idTratamiento" />
+          </Key>
+          <Property Name="idTratamiento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="precio" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Historia" Relationship="Self.FK__Historia__idTrat__59063A47" FromRole="Tratamiento" ToRole="Historia" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dni" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="contraseña" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nombres" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="sexo" Type="Int32" />
+          <Property Name="rol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="Dentista" Relationship="Self.FK__Dentista__idUsua__440B1D61" FromRole="Usuario" ToRole="Dentista" />
+          <NavigationProperty Name="Paciente" Relationship="Self.FK__Paciente__idUsua__3F466844" FromRole="Usuario" ToRole="Paciente" />
+        </EntityType>
+        <Association Name="FK__Cita__idDentista__4BAC3F29">
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="0..1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dentista">
+              <PropertyRef Name="idDentista" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="idDentista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cita__idPaciente__4AB81AF0">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historia__idCita__571DF1D5">
+          <End Role="Cita" Type="Self.Cita" Multiplicity="0..1" />
+          <End Role="Historia" Type="Self.Historia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cita">
+              <PropertyRef Name="idCita" />
+            </Principal>
+            <Dependent Role="Historia">
+              <PropertyRef Name="idCita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Dentista__especi__44FF419A">
+          <End Role="Especialidad" Type="Self.Especialidad" Multiplicity="0..1" />
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidad">
+              <PropertyRef Name="idEspecialidad" />
+            </Principal>
+            <Dependent Role="Dentista">
+              <PropertyRef Name="especialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Dentista__idUsua__440B1D61">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Dentista">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Disponibi__idDen__5EBF139D">
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Disponibilidad" Type="Self.Disponibilidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dentista">
+              <PropertyRef Name="idDentista" />
+            </Principal>
+            <Dependent Role="Disponibilidad">
+              <PropertyRef Name="idDentista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historia__idDent__5812160E">
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="0..1" />
+          <End Role="Historia" Type="Self.Historia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dentista">
+              <PropertyRef Name="idDentista" />
+            </Principal>
+            <Dependent Role="Historia">
+              <PropertyRef Name="idDentista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HorarioDe__idDen__5BE2A6F2">
+          <End Role="Dentista" Type="Self.Dentista" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="HorarioDentista" Type="Self.HorarioDentista" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dentista">
+              <PropertyRef Name="idDentista" />
+            </Principal>
+            <Dependent Role="HorarioDentista">
+              <PropertyRef Name="idDentista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Factura__idPacie__4F7CD00D">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historia__idPaci__5629CD9C">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Historia" Type="Self.Historia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="Historia">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historia__idTrat__59063A47">
+          <End Role="Tratamiento" Type="Self.Tratamiento" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Historia" Type="Self.Historia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tratamiento">
+              <PropertyRef Name="idTratamiento" />
+            </Principal>
+            <Dependent Role="Historia">
+              <PropertyRef Name="idTratamiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paciente__idUsua__3F466844">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Paciente">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pago__idPaciente__534D60F1">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="idPaciente" />
+            </Principal>
+            <Dependent Role="Pago">
+              <PropertyRef Name="idPaciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClinicaDental_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cita" EntityType="Self.Cita" />
+          <EntitySet Name="Dentista" EntityType="Self.Dentista" />
+          <EntitySet Name="Disponibilidad" EntityType="Self.Disponibilidad" />
+          <EntitySet Name="Especialidad" EntityType="Self.Especialidad" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" />
+          <EntitySet Name="Historia" EntityType="Self.Historia" />
+          <EntitySet Name="HorarioDentista" EntityType="Self.HorarioDentista" />
+          <EntitySet Name="Paciente" EntityType="Self.Paciente" />
+          <EntitySet Name="Pago" EntityType="Self.Pago" />
+          <EntitySet Name="Tratamiento" EntityType="Self.Tratamiento" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK__Cita__idDentista__4BAC3F29" Association="Self.FK__Cita__idDentista__4BAC3F29">
+            <End Role="Dentista" EntitySet="Dentista" />
+            <End Role="Cita" EntitySet="Cita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cita__idPaciente__4AB81AF0" Association="Self.FK__Cita__idPaciente__4AB81AF0">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="Cita" EntitySet="Cita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historia__idCita__571DF1D5" Association="Self.FK__Historia__idCita__571DF1D5">
+            <End Role="Cita" EntitySet="Cita" />
+            <End Role="Historia" EntitySet="Historia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Dentista__especi__44FF419A" Association="Self.FK__Dentista__especi__44FF419A">
+            <End Role="Especialidad" EntitySet="Especialidad" />
+            <End Role="Dentista" EntitySet="Dentista" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Dentista__idUsua__440B1D61" Association="Self.FK__Dentista__idUsua__440B1D61">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Dentista" EntitySet="Dentista" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Disponibi__idDen__5EBF139D" Association="Self.FK__Disponibi__idDen__5EBF139D">
+            <End Role="Dentista" EntitySet="Dentista" />
+            <End Role="Disponibilidad" EntitySet="Disponibilidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historia__idDent__5812160E" Association="Self.FK__Historia__idDent__5812160E">
+            <End Role="Dentista" EntitySet="Dentista" />
+            <End Role="Historia" EntitySet="Historia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HorarioDe__idDen__5BE2A6F2" Association="Self.FK__HorarioDe__idDen__5BE2A6F2">
+            <End Role="Dentista" EntitySet="Dentista" />
+            <End Role="HorarioDentista" EntitySet="HorarioDentista" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Factura__idPacie__4F7CD00D" Association="Self.FK__Factura__idPacie__4F7CD00D">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historia__idPaci__5629CD9C" Association="Self.FK__Historia__idPaci__5629CD9C">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="Historia" EntitySet="Historia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historia__idTrat__59063A47" Association="Self.FK__Historia__idTrat__59063A47">
+            <End Role="Tratamiento" EntitySet="Tratamiento" />
+            <End Role="Historia" EntitySet="Historia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paciente__idUsua__3F466844" Association="Self.FK__Paciente__idUsua__3F466844">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Paciente" EntitySet="Paciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pago__idPaciente__534D60F1" Association="Self.FK__Pago__idPaciente__534D60F1">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="Pago" EntitySet="Pago" />
+          </AssociationSet>
+          <FunctionImport Name="sp_ActualizarDentista">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="dni" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="contraseña" Mode="In" Type="String" />
+            <Parameter Name="nombres" Mode="In" Type="String" />
+            <Parameter Name="apellidos" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="fechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="direccion" Mode="In" Type="String" />
+            <Parameter Name="sexo" Mode="In" Type="Int32" />
+            <Parameter Name="estado" Mode="In" Type="Int32" />
+            <Parameter Name="especialidad" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActualizarEstadoCita">
+            <Parameter Name="idCita" Mode="In" Type="Int32" />
+            <Parameter Name="nuevoEstado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActualizarHistoriaClinica">
+            <Parameter Name="idHistoria" Mode="In" Type="Int32" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="observaciones" Mode="In" Type="String" />
+            <Parameter Name="idTratamiento" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActualizarPaciente">
+            <Parameter Name="idPaciente" Mode="In" Type="Int32" />
+            <Parameter Name="dni" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="contraseña" Mode="In" Type="String" />
+            <Parameter Name="nombres" Mode="In" Type="String" />
+            <Parameter Name="apellidos" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="fechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="direccion" Mode="In" Type="String" />
+            <Parameter Name="sexo" Mode="In" Type="Int32" />
+            <Parameter Name="estado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AgregarAdmin">
+            <Parameter Name="dni" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="contraseña" Mode="In" Type="String" />
+            <Parameter Name="nombres" Mode="In" Type="String" />
+            <Parameter Name="apellidos" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="fechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="direccion" Mode="In" Type="String" />
+            <Parameter Name="sexo" Mode="In" Type="Int32" />
+            <Parameter Name="estado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AgregarCita" ReturnType="Collection(String)">
+            <Parameter Name="idPaciente" Mode="In" Type="Int32" />
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="fechaCita" Mode="In" Type="DateTime" />
+            <Parameter Name="horaCita" Mode="In" Type="Time" />
+            <Parameter Name="motivoCita" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AgregarDentista">
+            <Parameter Name="dni" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="contraseña" Mode="In" Type="String" />
+            <Parameter Name="nombres" Mode="In" Type="String" />
+            <Parameter Name="apellidos" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="fechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="direccion" Mode="In" Type="String" />
+            <Parameter Name="sexo" Mode="In" Type="Int32" />
+            <Parameter Name="especialidad" Mode="In" Type="Int32" />
+            <Parameter Name="estado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AgregarEspecialidad">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AgregarHistoriaClinica">
+            <Parameter Name="idPaciente" Mode="In" Type="Int32" />
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="idTratamiento" Mode="In" Type="Int32" />
+            <Parameter Name="idCita" Mode="In" Type="Int32" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="observaciones" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AgregarHorarioDentista">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="diaSemana" Mode="In" Type="String" />
+            <Parameter Name="horaInicio" Mode="In" Type="Time" />
+            <Parameter Name="horaFin" Mode="In" Type="Time" />
+            <Parameter Name="mesObjetivo" Mode="In" Type="Int32" />
+            <Parameter Name="anioObjetivo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AgregarPaciente">
+            <Parameter Name="dni" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="contraseña" Mode="In" Type="String" />
+            <Parameter Name="nombres" Mode="In" Type="String" />
+            <Parameter Name="apellidos" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="fechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="direccion" Mode="In" Type="String" />
+            <Parameter Name="sexo" Mode="In" Type="Int32" />
+            <Parameter Name="estado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AgregarRecepcionista">
+            <Parameter Name="dni" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="contraseña" Mode="In" Type="String" />
+            <Parameter Name="nombres" Mode="In" Type="String" />
+            <Parameter Name="apellidos" Mode="In" Type="String" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="fechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="direccion" Mode="In" Type="String" />
+            <Parameter Name="sexo" Mode="In" Type="Int32" />
+            <Parameter Name="estado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AgregarTratamiento">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="precio" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CancelarCita">
+            <Parameter Name="idCita" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ConsultarCitas" ReturnType="Collection(ClinicaDental_DBModel.sp_ConsultarCitas_Result)">
+            <Parameter Name="idPaciente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ConsultarDentista" ReturnType="Collection(ClinicaDental_DBModel.sp_ConsultarDentista_Result)">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ConsultarDisponibilidad" ReturnType="Collection(ClinicaDental_DBModel.sp_ConsultarDisponibilidad_Result)">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ConsultarDisponibilidadDetallada" ReturnType="Collection(ClinicaDental_DBModel.sp_ConsultarDisponibilidadDetallada_Result)">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ConsultarHistoriaClinica" ReturnType="Collection(ClinicaDental_DBModel.sp_ConsultarHistoriaClinica_Result)">
+            <Parameter Name="idPaciente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ConsultarHistoriaClinicaPorCita" ReturnType="Collection(ClinicaDental_DBModel.sp_ConsultarHistoriaClinicaPorCita_Result)">
+            <Parameter Name="idCita" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ConsultarPaciente" ReturnType="Collection(ClinicaDental_DBModel.sp_ConsultarPaciente_Result)">
+            <Parameter Name="idPaciente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EliminarDentista">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EliminarDisponibilidadDentista">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="Hora" Mode="In" Type="Time" />
+            <Parameter Name="Motivo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EliminarDisponibilidadDia">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="Motivo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EliminarHorarioDentistaDia">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EliminarHorarioDentistaHora">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="Hora" Mode="In" Type="Time" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EliminarPaciente">
+            <Parameter Name="idPaciente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCitasPorDentistaYFecha" ReturnType="Collection(ClinicaDental_DBModel.sp_ListarCitasPorDentistaYFecha_Result)">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDentistas" ReturnType="Collection(ClinicaDental_DBModel.sp_ListarDentistas_Result)" />
+          <FunctionImport Name="sp_ListarDentistasPorEspecialidadDetallado" ReturnType="Collection(ClinicaDental_DBModel.sp_ListarDentistasPorEspecialidadDetallado_Result)">
+            <Parameter Name="idEspecialidad" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarEspecialidades" ReturnType="Collection(ClinicaDental_DBModel.sp_ListarEspecialidades_Result)" />
+          <FunctionImport Name="sp_ListarPacientes" ReturnType="Collection(ClinicaDental_DBModel.sp_ListarPacientes_Result)" />
+          <FunctionImport Name="sp_ListarTratamientos" ReturnType="Collection(ClinicaDental_DBModel.sp_ListarTratamientos_Result)" />
+          <FunctionImport Name="sp_LoginPaciente" ReturnType="Collection(String)">
+            <Parameter Name="dni" Mode="In" Type="String" />
+            <Parameter Name="contraseña" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerCalendarioDisponible" ReturnType="Collection(ClinicaDental_DBModel.sp_ObtenerCalendarioDisponible_Result)">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerCalendarioSemanal">
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerHorarioDentista" ReturnType="Collection(ClinicaDental_DBModel.sp_ObtenerHorarioDentista_Result)">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerHorarioDetallado" ReturnType="Collection(ClinicaDental_DBModel.sp_ObtenerHorarioDetallado_Result)">
+            <Parameter Name="idDentista" Mode="In" Type="Int32" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RegistrarPago">
+            <Parameter Name="idPaciente" Mode="In" Type="Int32" />
+            <Parameter Name="monto" Mode="In" Type="Decimal" />
+            <Parameter Name="metodoPago" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_ConsultarCitas_Result">
+          <Property Type="Int32" Name="idCita" Nullable="false" />
+          <Property Type="DateTime" Name="fechaCita" Nullable="true" />
+          <Property Type="String" Name="hora" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="nombreDentista" Nullable="true" MaxLength="201" />
+          <Property Type="String" Name="especialidadDentista" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="motivoCita" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="estado" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ConsultarDentista_Result">
+          <Property Type="Int32" Name="idDentista" Nullable="false" />
+          <Property Type="Int32" Name="idUsuario" Nullable="false" />
+          <Property Type="String" Name="dni" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="nombres" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="telefono" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="correo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="direccion" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="fechaNacimiento" Nullable="true" />
+          <Property Type="Int32" Name="sexo" Nullable="true" />
+          <Property Type="Int32" Name="estadoUsuario" Nullable="true" />
+          <Property Type="String" Name="contraseña" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="especialidad" Nullable="true" />
+          <Property Type="Int32" Name="estadoDentista" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ConsultarDisponibilidad_Result">
+          <Property Type="Time" Name="hora" Nullable="true" />
+          <Property Type="Int32" Name="estado" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ConsultarDisponibilidadDetallada_Result">
+          <Property Type="String" Name="diaSemana" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="fecha" Nullable="true" />
+          <Property Type="Time" Name="hora" Nullable="true" />
+          <Property Type="Int32" Name="estado" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ConsultarHistoriaClinica_Result">
+          <Property Type="DateTime" Name="fecha" Nullable="true" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="observaciones" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="NombreTratamiento" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="NombreDentista" Nullable="true" MaxLength="201" />
+          <Property Type="DateTime" Name="fechaCita" Nullable="true" />
+          <Property Type="String" Name="horaCita" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="motivoCita" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="estado" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ConsultarHistoriaClinicaPorCita_Result">
+          <Property Type="Int32" Name="idHistoria" Nullable="false" />
+          <Property Type="Int32" Name="idPaciente" Nullable="true" />
+          <Property Type="Int32" Name="idDentista" Nullable="true" />
+          <Property Type="Int32" Name="idTratamiento" Nullable="true" />
+          <Property Type="Int32" Name="idCita" Nullable="true" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="observaciones" Nullable="true" MaxLength="Max" />
+          <Property Type="DateTime" Name="fecha" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ConsultarPaciente_Result">
+          <Property Type="Int32" Name="idPaciente" Nullable="false" />
+          <Property Type="Int32" Name="idUsuario" Nullable="false" />
+          <Property Type="String" Name="dni" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="nombres" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="telefono" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="correo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="direccion" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="fechaNacimiento" Nullable="true" />
+          <Property Type="Int32" Name="sexo" Nullable="true" />
+          <Property Type="Int32" Name="estado" Nullable="true" />
+          <Property Type="String" Name="contraseña" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="sp_ListarCitasPorDentistaYFecha_Result">
+          <Property Type="Int32" Name="idCita" Nullable="false" />
+          <Property Type="DateTime" Name="fechaCita" Nullable="true" />
+          <Property Type="Time" Name="horaCita" Nullable="true" />
+          <Property Type="String" Name="motivoCita" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="estado" Nullable="true" />
+          <Property Type="Int32" Name="idPaciente" Nullable="false" />
+          <Property Type="String" Name="PacienteNombres" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PacienteApellidos" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PacienteDNI" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="PacienteCorreo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PacienteTelefono" Nullable="true" MaxLength="15" />
+          <Property Type="DateTime" Name="PacienteFechaNacimiento" Nullable="true" />
+          <Property Type="Int32" Name="PacienteEdad" Nullable="true" />
+          <Property Type="String" Name="PacienteDireccion" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="PacienteSexo" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ListarDentistas_Result">
+          <Property Type="Int32" Name="idDentista" Nullable="false" />
+          <Property Type="Int32" Name="idUsuario" Nullable="false" />
+          <Property Type="String" Name="dni" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="nombres" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="telefono" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="correo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="direccion" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="fechaNacimiento" Nullable="true" />
+          <Property Type="Int32" Name="edad" Nullable="true" />
+          <Property Type="Int32" Name="sexo" Nullable="true" />
+          <Property Type="Int32" Name="estadoUsuario" Nullable="true" />
+          <Property Type="String" Name="especialidad" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="estadoDentista" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ListarDentistasPorEspecialidadDetallado_Result">
+          <Property Type="Int32" Name="idUsuario" Nullable="false" />
+          <Property Type="String" Name="dni" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="nombres" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="telefono" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="correo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="direccion" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="fechaNacimiento" Nullable="true" />
+          <Property Type="Int32" Name="edad" Nullable="true" />
+          <Property Type="Int32" Name="sexo" Nullable="true" />
+          <Property Type="String" Name="rol" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="estadoUsuario" Nullable="true" />
+          <Property Type="Int32" Name="idDentista" Nullable="false" />
+          <Property Type="Int32" Name="estadoDentista" Nullable="true" />
+          <Property Type="String" Name="especialidadNombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="especialidadDescripcion" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="sp_ListarEspecialidades_Result">
+          <Property Type="Int32" Name="idEspecialidad" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="sp_ListarPacientes_Result">
+          <Property Type="Int32" Name="idPaciente" Nullable="false" />
+          <Property Type="Int32" Name="idUsuario" Nullable="false" />
+          <Property Type="String" Name="dni" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="nombres" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="telefono" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="correo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="direccion" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="fechaNacimiento" Nullable="true" />
+          <Property Type="Int32" Name="edad" Nullable="true" />
+          <Property Type="Int32" Name="sexo" Nullable="true" />
+          <Property Type="Int32" Name="estado" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ListarTratamientos_Result">
+          <Property Type="Int32" Name="idTratamiento" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="250" />
+          <Property Type="Decimal" Name="precio" Nullable="true" Precision="10" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="sp_ObtenerCalendarioDisponible_Result">
+          <Property Type="Time" Name="Hora" Nullable="true" />
+          <Property Type="String" Name="Lunes" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Martes" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Miércoles" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Jueves" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Viernes" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Sábado" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Domingo" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="sp_ObtenerHorarioDentista_Result">
+          <Property Type="Time" Name="Hora" Nullable="true" />
+          <Property Type="String" Name="Lunes" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Martes" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Miércoles" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Jueves" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Viernes" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Sábado" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Domingo" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="sp_ObtenerHorarioDetallado_Result">
+          <Property Type="Time" Name="Hora" Nullable="true" />
+          <Property Type="String" Name="Lunes" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Martes" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Miércoles" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Jueves" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Viernes" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Sábado" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Domingo" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ClinicaDental_DBModelStoreContainer" CdmEntityContainer="ClinicaDental_DBEntities">
+          <EntitySetMapping Name="Cita">
+            <EntityTypeMapping TypeName="ClinicaDental_DBModel.Cita">
+              <MappingFragment StoreEntitySet="Cita">
+                <ScalarProperty Name="idCita" ColumnName="idCita" />
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="idDentista" ColumnName="idDentista" />
+                <ScalarProperty Name="fechaCita" ColumnName="fechaCita" />
+                <ScalarProperty Name="horaCita" ColumnName="horaCita" />
+                <ScalarProperty Name="motivoCita" ColumnName="motivoCita" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dentista">
+            <EntityTypeMapping TypeName="ClinicaDental_DBModel.Dentista">
+              <MappingFragment StoreEntitySet="Dentista">
+                <ScalarProperty Name="idDentista" ColumnName="idDentista" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="especialidad" ColumnName="especialidad" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Disponibilidad">
+            <EntityTypeMapping TypeName="ClinicaDental_DBModel.Disponibilidad">
+              <MappingFragment StoreEntitySet="Disponibilidad">
+                <ScalarProperty Name="idDisponibilidad" ColumnName="idDisponibilidad" />
+                <ScalarProperty Name="idDentista" ColumnName="idDentista" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="hora" ColumnName="hora" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="MotivoEliminacion" ColumnName="MotivoEliminacion" />
+                <ScalarProperty Name="Eliminado" ColumnName="Eliminado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Especialidad">
+            <EntityTypeMapping TypeName="ClinicaDental_DBModel.Especialidad">
+              <MappingFragment StoreEntitySet="Especialidad">
+                <ScalarProperty Name="idEspecialidad" ColumnName="idEspecialidad" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factura">
+            <EntityTypeMapping TypeName="ClinicaDental_DBModel.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="idFactura" ColumnName="idFactura" />
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="montoTotal" ColumnName="montoTotal" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Historia">
+            <EntityTypeMapping TypeName="ClinicaDental_DBModel.Historia">
+              <MappingFragment StoreEntitySet="Historia">
+                <ScalarProperty Name="idHistoria" ColumnName="idHistoria" />
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="idCita" ColumnName="idCita" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idDentista" ColumnName="idDentista" />
+                <ScalarProperty Name="idTratamiento" ColumnName="idTratamiento" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HorarioDentista">
+            <EntityTypeMapping TypeName="ClinicaDental_DBModel.HorarioDentista">
+              <MappingFragment StoreEntitySet="HorarioDentista">
+                <ScalarProperty Name="idHorario" ColumnName="idHorario" />
+                <ScalarProperty Name="idDentista" ColumnName="idDentista" />
+                <ScalarProperty Name="diaSemana" ColumnName="diaSemana" />
+                <ScalarProperty Name="horaInicio" ColumnName="horaInicio" />
+                <ScalarProperty Name="horaFin" ColumnName="horaFin" />
+                <ScalarProperty Name="mesObjetivo" ColumnName="mesObjetivo" />
+                <ScalarProperty Name="anioObjetivo" ColumnName="anioObjetivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Paciente">
+            <EntityTypeMapping TypeName="ClinicaDental_DBModel.Paciente">
+              <MappingFragment StoreEntitySet="Paciente">
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pago">
+            <EntityTypeMapping TypeName="ClinicaDental_DBModel.Pago">
+              <MappingFragment StoreEntitySet="Pago">
+                <ScalarProperty Name="idPago" ColumnName="idPago" />
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+                <ScalarProperty Name="metodoPago" ColumnName="metodoPago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tratamiento">
+            <EntityTypeMapping TypeName="ClinicaDental_DBModel.Tratamiento">
+              <MappingFragment StoreEntitySet="Tratamiento">
+                <ScalarProperty Name="idTratamiento" ColumnName="idTratamiento" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="ClinicaDental_DBModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ActualizarDentista" FunctionName="ClinicaDental_DBModel.Store.sp_ActualizarDentista" />
+          <FunctionImportMapping FunctionImportName="sp_ActualizarEstadoCita" FunctionName="ClinicaDental_DBModel.Store.sp_ActualizarEstadoCita" />
+          <FunctionImportMapping FunctionImportName="sp_ActualizarHistoriaClinica" FunctionName="ClinicaDental_DBModel.Store.sp_ActualizarHistoriaClinica" />
+          <FunctionImportMapping FunctionImportName="sp_ActualizarPaciente" FunctionName="ClinicaDental_DBModel.Store.sp_ActualizarPaciente" />
+          <FunctionImportMapping FunctionImportName="sp_AgregarAdmin" FunctionName="ClinicaDental_DBModel.Store.sp_AgregarAdmin" />
+          <FunctionImportMapping FunctionImportName="sp_AgregarCita" FunctionName="ClinicaDental_DBModel.Store.sp_AgregarCita" />
+          <FunctionImportMapping FunctionImportName="sp_AgregarDentista" FunctionName="ClinicaDental_DBModel.Store.sp_AgregarDentista" />
+          <FunctionImportMapping FunctionImportName="sp_AgregarEspecialidad" FunctionName="ClinicaDental_DBModel.Store.sp_AgregarEspecialidad" />
+          <FunctionImportMapping FunctionImportName="sp_AgregarHistoriaClinica" FunctionName="ClinicaDental_DBModel.Store.sp_AgregarHistoriaClinica" />
+          <FunctionImportMapping FunctionImportName="sp_AgregarHorarioDentista" FunctionName="ClinicaDental_DBModel.Store.sp_AgregarHorarioDentista" />
+          <FunctionImportMapping FunctionImportName="sp_AgregarPaciente" FunctionName="ClinicaDental_DBModel.Store.sp_AgregarPaciente" />
+          <FunctionImportMapping FunctionImportName="sp_AgregarRecepcionista" FunctionName="ClinicaDental_DBModel.Store.sp_AgregarRecepcionista" />
+          <FunctionImportMapping FunctionImportName="sp_AgregarTratamiento" FunctionName="ClinicaDental_DBModel.Store.sp_AgregarTratamiento" />
+          <FunctionImportMapping FunctionImportName="sp_CancelarCita" FunctionName="ClinicaDental_DBModel.Store.sp_CancelarCita" />
+          <FunctionImportMapping FunctionImportName="sp_ConsultarCitas" FunctionName="ClinicaDental_DBModel.Store.sp_ConsultarCitas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ConsultarCitas_Result">
+                <ScalarProperty Name="idCita" ColumnName="idCita" />
+                <ScalarProperty Name="fechaCita" ColumnName="fechaCita" />
+                <ScalarProperty Name="hora" ColumnName="hora" />
+                <ScalarProperty Name="nombreDentista" ColumnName="nombreDentista" />
+                <ScalarProperty Name="especialidadDentista" ColumnName="especialidadDentista" />
+                <ScalarProperty Name="motivoCita" ColumnName="motivoCita" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ConsultarDentista" FunctionName="ClinicaDental_DBModel.Store.sp_ConsultarDentista">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ConsultarDentista_Result">
+                <ScalarProperty Name="idDentista" ColumnName="idDentista" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="estadoUsuario" ColumnName="estadoUsuario" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="especialidad" ColumnName="especialidad" />
+                <ScalarProperty Name="estadoDentista" ColumnName="estadoDentista" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ConsultarDisponibilidad" FunctionName="ClinicaDental_DBModel.Store.sp_ConsultarDisponibilidad">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ConsultarDisponibilidad_Result">
+                <ScalarProperty Name="hora" ColumnName="hora" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ConsultarDisponibilidadDetallada" FunctionName="ClinicaDental_DBModel.Store.sp_ConsultarDisponibilidadDetallada">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ConsultarDisponibilidadDetallada_Result">
+                <ScalarProperty Name="diaSemana" ColumnName="diaSemana" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="hora" ColumnName="hora" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ConsultarHistoriaClinica" FunctionName="ClinicaDental_DBModel.Store.sp_ConsultarHistoriaClinica">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ConsultarHistoriaClinica_Result">
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+                <ScalarProperty Name="NombreTratamiento" ColumnName="NombreTratamiento" />
+                <ScalarProperty Name="NombreDentista" ColumnName="NombreDentista" />
+                <ScalarProperty Name="fechaCita" ColumnName="fechaCita" />
+                <ScalarProperty Name="horaCita" ColumnName="horaCita" />
+                <ScalarProperty Name="motivoCita" ColumnName="motivoCita" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ConsultarHistoriaClinicaPorCita" FunctionName="ClinicaDental_DBModel.Store.sp_ConsultarHistoriaClinicaPorCita">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ConsultarHistoriaClinicaPorCita_Result">
+                <ScalarProperty Name="idHistoria" ColumnName="idHistoria" />
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="idDentista" ColumnName="idDentista" />
+                <ScalarProperty Name="idTratamiento" ColumnName="idTratamiento" />
+                <ScalarProperty Name="idCita" ColumnName="idCita" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ConsultarPaciente" FunctionName="ClinicaDental_DBModel.Store.sp_ConsultarPaciente">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ConsultarPaciente_Result">
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_EliminarDentista" FunctionName="ClinicaDental_DBModel.Store.sp_EliminarDentista" />
+          <FunctionImportMapping FunctionImportName="sp_EliminarDisponibilidadDentista" FunctionName="ClinicaDental_DBModel.Store.sp_EliminarDisponibilidadDentista" />
+          <FunctionImportMapping FunctionImportName="sp_EliminarDisponibilidadDia" FunctionName="ClinicaDental_DBModel.Store.sp_EliminarDisponibilidadDia" />
+          <FunctionImportMapping FunctionImportName="sp_EliminarHorarioDentistaDia" FunctionName="ClinicaDental_DBModel.Store.sp_EliminarHorarioDentistaDia" />
+          <FunctionImportMapping FunctionImportName="sp_EliminarHorarioDentistaHora" FunctionName="ClinicaDental_DBModel.Store.sp_EliminarHorarioDentistaHora" />
+          <FunctionImportMapping FunctionImportName="sp_EliminarPaciente" FunctionName="ClinicaDental_DBModel.Store.sp_EliminarPaciente" />
+          <FunctionImportMapping FunctionImportName="sp_ListarCitasPorDentistaYFecha" FunctionName="ClinicaDental_DBModel.Store.sp_ListarCitasPorDentistaYFecha">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ListarCitasPorDentistaYFecha_Result">
+                <ScalarProperty Name="idCita" ColumnName="idCita" />
+                <ScalarProperty Name="fechaCita" ColumnName="fechaCita" />
+                <ScalarProperty Name="horaCita" ColumnName="horaCita" />
+                <ScalarProperty Name="motivoCita" ColumnName="motivoCita" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="PacienteNombres" ColumnName="PacienteNombres" />
+                <ScalarProperty Name="PacienteApellidos" ColumnName="PacienteApellidos" />
+                <ScalarProperty Name="PacienteDNI" ColumnName="PacienteDNI" />
+                <ScalarProperty Name="PacienteCorreo" ColumnName="PacienteCorreo" />
+                <ScalarProperty Name="PacienteTelefono" ColumnName="PacienteTelefono" />
+                <ScalarProperty Name="PacienteFechaNacimiento" ColumnName="PacienteFechaNacimiento" />
+                <ScalarProperty Name="PacienteEdad" ColumnName="PacienteEdad" />
+                <ScalarProperty Name="PacienteDireccion" ColumnName="PacienteDireccion" />
+                <ScalarProperty Name="PacienteSexo" ColumnName="PacienteSexo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ListarDentistas" FunctionName="ClinicaDental_DBModel.Store.sp_ListarDentistas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ListarDentistas_Result">
+                <ScalarProperty Name="idDentista" ColumnName="idDentista" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="edad" ColumnName="edad" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="estadoUsuario" ColumnName="estadoUsuario" />
+                <ScalarProperty Name="especialidad" ColumnName="especialidad" />
+                <ScalarProperty Name="estadoDentista" ColumnName="estadoDentista" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ListarDentistasPorEspecialidadDetallado" FunctionName="ClinicaDental_DBModel.Store.sp_ListarDentistasPorEspecialidadDetallado">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ListarDentistasPorEspecialidadDetallado_Result">
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="edad" ColumnName="edad" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+                <ScalarProperty Name="estadoUsuario" ColumnName="estadoUsuario" />
+                <ScalarProperty Name="idDentista" ColumnName="idDentista" />
+                <ScalarProperty Name="estadoDentista" ColumnName="estadoDentista" />
+                <ScalarProperty Name="especialidadNombre" ColumnName="especialidadNombre" />
+                <ScalarProperty Name="especialidadDescripcion" ColumnName="especialidadDescripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ListarEspecialidades" FunctionName="ClinicaDental_DBModel.Store.sp_ListarEspecialidades">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ListarEspecialidades_Result">
+                <ScalarProperty Name="idEspecialidad" ColumnName="idEspecialidad" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ListarPacientes" FunctionName="ClinicaDental_DBModel.Store.sp_ListarPacientes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ListarPacientes_Result">
+                <ScalarProperty Name="idPaciente" ColumnName="idPaciente" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="edad" ColumnName="edad" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ListarTratamientos" FunctionName="ClinicaDental_DBModel.Store.sp_ListarTratamientos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ListarTratamientos_Result">
+                <ScalarProperty Name="idTratamiento" ColumnName="idTratamiento" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_LoginPaciente" FunctionName="ClinicaDental_DBModel.Store.sp_LoginPaciente" />
+          <FunctionImportMapping FunctionImportName="sp_ObtenerCalendarioDisponible" FunctionName="ClinicaDental_DBModel.Store.sp_ObtenerCalendarioDisponible">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ObtenerCalendarioDisponible_Result">
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Lunes" ColumnName="Lunes" />
+                <ScalarProperty Name="Martes" ColumnName="Martes" />
+                <ScalarProperty Name="Miércoles" ColumnName="Miércoles" />
+                <ScalarProperty Name="Jueves" ColumnName="Jueves" />
+                <ScalarProperty Name="Viernes" ColumnName="Viernes" />
+                <ScalarProperty Name="Sábado" ColumnName="Sábado" />
+                <ScalarProperty Name="Domingo" ColumnName="Domingo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ObtenerCalendarioSemanal" FunctionName="ClinicaDental_DBModel.Store.sp_ObtenerCalendarioSemanal" />
+          <FunctionImportMapping FunctionImportName="sp_ObtenerHorarioDentista" FunctionName="ClinicaDental_DBModel.Store.sp_ObtenerHorarioDentista">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ObtenerHorarioDentista_Result">
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Lunes" ColumnName="Lunes" />
+                <ScalarProperty Name="Martes" ColumnName="Martes" />
+                <ScalarProperty Name="Miércoles" ColumnName="Miércoles" />
+                <ScalarProperty Name="Jueves" ColumnName="Jueves" />
+                <ScalarProperty Name="Viernes" ColumnName="Viernes" />
+                <ScalarProperty Name="Sábado" ColumnName="Sábado" />
+                <ScalarProperty Name="Domingo" ColumnName="Domingo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ObtenerHorarioDetallado" FunctionName="ClinicaDental_DBModel.Store.sp_ObtenerHorarioDetallado">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicaDental_DBModel.sp_ObtenerHorarioDetallado_Result">
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Lunes" ColumnName="Lunes" />
+                <ScalarProperty Name="Martes" ColumnName="Martes" />
+                <ScalarProperty Name="Miércoles" ColumnName="Miércoles" />
+                <ScalarProperty Name="Jueves" ColumnName="Jueves" />
+                <ScalarProperty Name="Viernes" ColumnName="Viernes" />
+                <ScalarProperty Name="Sábado" ColumnName="Sábado" />
+                <ScalarProperty Name="Domingo" ColumnName="Domingo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegistrarPago" FunctionName="ClinicaDental_DBModel.Store.sp_RegistrarPago" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
